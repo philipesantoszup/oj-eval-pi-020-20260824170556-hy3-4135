@@ -1,5 +1,16 @@
 #ifndef OS_MM_H
 #define OS_MM_H
+
+/* The provided test driver (main.c) intentionally passes the int returned
+ * by return_pages() to PTR_ERR() (which expects a pointer). That triggers a
+ * -Wint-conversion diagnostic that some toolchains treat as a hard error.
+ * It does not affect program behaviour or output, so we silence it here.
+ * This pragma is output-neutral. */
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic ignored "-Wint-conversion"
+#elif defined(__clang__)
+#pragma clang diagnostic ignored "-Wint-conversion"
+#endif
 #define MAX_ERRNO 4095
 
 #define OK          0
